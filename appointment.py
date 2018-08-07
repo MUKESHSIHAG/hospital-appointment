@@ -9,6 +9,8 @@ import tkinter.messagebox
 conn = sqlite3.connect('database.db')
 #cursor to move around database
 c = conn.cursor()
+#creting the empty list.
+ids = []
 
 #tkinter window
 class Application:
@@ -67,7 +69,26 @@ class Application:
         self.submit = Button(self.left, text="Add Appointment", width=20, height=2, bg='lightgreen', command = self.add_appointment)
         self.submit.place(x=285, y=340)
 
-    #function to call when the submit button i  s clicked.........
+        #getting the number of appointments fixed to view in the log
+        sql2 = "SELECT ID FROM appointments"
+        self.result = c.execute(sql2)
+        for self.row in self.result:
+            self.id = self.row[0]
+            ids.append(slef.id)
+
+        #ordering the list
+        self.new = sorted(ids)
+        self.final_id = self.new[len(ids)-1]
+
+        #displaying the log in our right frame..
+        self.logs = Label(self.right, text='Logs', font=('arial 28 bold'), fg='white', bg='lightgreen')
+        self.logs.place(x=0, y=0)
+
+        self.box = Text(self.right, width=40,height=40)
+        self.box.place(x=20, y=30)
+        self.box.insert(END, "Total Appointment till now : "+str(self.final_id))
+
+    #function to call when the submit button is clicked.........
     def add_appointment(self):
         #getting the user input..........
         self.val1 = self.name_ent.get()
@@ -85,8 +106,10 @@ class Application:
             sql = "INSERT INTO 'appointments' (name, age, gender, location, scheduled-time, phone)VALUES(?, ?, ?, ?, ?, ?)"
             c.execute(sql, (self.val1, self.val2, self.val3, self.val4, self.val5, self.val6))
             conn.commit()
-            print("successful")
-        
+            tkinter.messagebox.showinfo("Success "+"Appointment for "+str(self.val1)+" has been created")
+
+            
+            self.box.insert(END, 'Appointment fixed for '+str(self.val1)+' at '+str(self.val5))
 
 #creating the object
 root = Tk()
