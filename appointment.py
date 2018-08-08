@@ -74,7 +74,7 @@ class Application:
         self.result = c.execute(sql2)
         for self.row in self.result:
             self.id = self.row[0]
-            ids.append(slef.id)
+            ids.append(self.id)
 
         #ordering the list
         self.new = sorted(ids)
@@ -103,12 +103,11 @@ class Application:
             tkinter.messagebox.showinfo('warning', 'please fill up the form')
         else:
             #now we add it to the database.......
-            sql = "INSERT INTO 'appointments' (name, age, gender, location, scheduled-time, phone)VALUES(?, ?, ?, ?, ?, ?)"
+            sql = "INSERT INTO appointments (name, age, gender, location, scheduled-time, phone)VALUES(?, ?, ?, ?, ?, ?)"
             c.execute(sql, (self.val1, self.val2, self.val3, self.val4, self.val5, self.val6))
             conn.commit()
             tkinter.messagebox.showinfo("Success "+"Appointment for "+str(self.val1)+" has been created")
 
-            
             self.box.insert(END, 'Appointment fixed for '+str(self.val1)+' at '+str(self.val5))
 
 #creating the object
