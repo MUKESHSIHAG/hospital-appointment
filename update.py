@@ -7,7 +7,7 @@ conn = sqlite3.connect('database.db')
 c = conn.cursor()
 
 class Application:
-    def __init__(self,master):
+    def __init__(self, master):
         self.master = master
 
         #heading label
@@ -84,8 +84,37 @@ class Application:
         self.ent6.insert(END, str(self.phone))
         
         #button to execute update
-        self.update = Button(self.master, text="update", width=20, height=2, bg='lightblue')
+        self.update = Button(self.master, text="update", width=20, height=2, bg='lightblue', command=self.update_db)
         self.update.place(x=380, y=380)
+
+        #button to delete
+        self.delete = Button(self.master, text="update", width=20, height=2, bg='lightblue', command=self.delete_db)
+        self.delete.place(x=380, y=380)
+    
+    def update_db(self):
+        self.var1 = self.ent1.get()
+        self.var2 = self.ent2.get()
+        self.var3 = self.ent3.get()
+        self.var4 = self.ent4.get()
+        self.var5 = self.ent5.get()
+        self.var6 = self.ent6.get()
+
+        query = "UPDATE appointments SET name=?, age=?, gender=?, location=?,Phone=?, time=? WHERE name LIKE ?"
+        c.execute(query, (self.var1, self.varr2, self.var3, self.var4, self.var5, self.var6, self.namenet.get()))
+        conn.commit()
+        tkinter.messagebox.showinfo("Updated"," successfully updated")
+
+    def delete_db(self):
+        sql2 = "DELETE FROM appointments WHERE name LIKE ?"
+        c.execute(sql2, (self.namenet.get(),))
+        conn.commit()
+        tkinter.messagebox.showinfow("Success", "successfully deleted")
+        self.ent1.destroy()
+        self.ent2.destroy()
+        self.ent3.destroy()
+        self.ent4.destroy()
+        self.ent5.destroy()
+        self.ent6.destroy()
 
 #creating the object
 root  = Tk()
