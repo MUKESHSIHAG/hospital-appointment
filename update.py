@@ -119,6 +119,6 @@ class Application:
 #creating the object
 root  = Tk()
 b = Application(root)
-root.geometry("1280x720+0+0")
+root.geometry("1366x780+0+0")
 root.resizable(FALSE,FALSE)
 root.mainloop()

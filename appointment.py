@@ -76,15 +76,15 @@ class Application:
 
         #ordering the list
         self.new = sorted(ids)
-        #self.final_id = self.new[len(ids)-1]
+        self.final_id = self.new[len(ids)-1]
 
         #displaying the log in our right frame..
         self.logs = Label(self.right, text='Logs', font=('arial 28 bold'), fg='white', bg='lightgreen')
         self.logs.place(x=0, y=0)
 
         self.box = Text(self.right, width=40,height=40)
-        self.box.place(x=20, y=50)
-        #self.box.insert(END, "Total Appointment till now : "+str(self.final_id))
+        self.box.place(x=20, y=60)
+        self.box.insert(END, "Total Appointment till now : "+str(self.final_id))
 
     #function to call when the submit button is clicked.........
     def add_appointment(self):
@@ -101,7 +101,7 @@ class Application:
             tkinter.messagebox.showinfo('warning', 'please fill up the form')
         else:
             #now we add it to the database.......
-            sql = "INSERT INTO appointments name=?, age=?, gender=?, location=?, scheduled-time=?, phone=? WHERE name LIKE ?"
+            sql = "INSERT INTO appointments (name, age, gender, location, scheduled-time, phone)VALUES(?, ?, ?, ?, ?, ?)"
             c.execute(sql, (self.val1, self.val2, self.val3, self.val4, self.val5, self.val6))
             conn.commit()
             tkinter.messagebox.showinfo("Success "+"Appointment for "+str(self.val1)+" has been created")
